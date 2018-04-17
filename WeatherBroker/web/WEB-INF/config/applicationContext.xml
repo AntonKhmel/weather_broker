@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+	   http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	   http://www.springframework.org/schema/tx
+	   http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	   http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/jee
+       http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
+
+    <!-- context:component-scan This tag will scan @Component, @Repository, @Service, @Controller
+         and also resolves @Autowired and @Qualifier -->
+    <context:component-scan base-package="ru.bellintegrator.wb" />
+
+    <tx:annotation-driven />
+
+    <context:property-placeholder location="classpath:util.properties" />
+
+    <bean id="jmsConnectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName">
+            <value>jboss/exported/jms/ConnectionFactory</value>
+        </property>
+        <property name="resourceRef"><value>true</value></property>
+    </bean>
+
+    <bean id="destination" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:/jboss/exported/jms/queue/weatherQueue"/>
+    </bean>
+
+    <bean id="myJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="jmsConnectionFactory" />
+        <property name="defaultDestination" ref="destination" />
+        <property name="messageConverter" ref="converter"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="pubSubDomain" value="true"/>
+        <property name="sessionAcknowledgeMode" value="#{T(javax.jms.Session).CLIENT_ACKNOWLEDGE}" />
+        <property name="receiveTimeout"	value="#{T(org.springframework.jms.core.JmsTemplate).RECEIVE_TIMEOUT_NO_WAIT}" />
+    </bean>
+
+    <bean id="converter" class="org.springframework.jms.support.converter.MappingJackson2MessageConverter">
+        <property name="targetType" value="TEXT"/>
+        <property name="typeIdPropertyName" value="_type"/>
+    </bean>
+
+    <bean id="listnerJms" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory" />
+        <property name="destination" ref="destination" />
+        <property name="sessionAcknowledgeModeName" value="AUTO_ACKNOWLEDGE" />
+        <property name="messageListener" ref="messageListenerAdapter" />
+        <property name="sessionTransacted" value="true" />
+        <property name="concurrentConsumers" value="1"></property>
+        <property name="errorHandler" ref="someHandler"/>
+    </bean>
+
+    <bean id="someHandler" class="ru.bellintegrator.wb.exception.SomeHandler" />
+
+    <bean id="messageListenerAdapter" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+        <constructor-arg ref="weatherListner" />
+        <!--<property name="defaultListenerMethod" value="receiveMessage" />-->
+    </bean>
+
+    <bean id="mapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+
+    <!-- Spring based Security Part, Those are the users created in ApplicationRealm of WildFLy -->
+    <!--<bean id="authenticatedConnectionFactory"-->
+          <!--class="org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter">-->
+        <!--<property name="targetConnectionFactory" ref="jmsConnectionFactory" />-->
+        <!--<property name="username" value="root" />-->
+        <!--<property name="password" value="root" />-->
+    <!--</bean>-->
+
+    <!-- initialize DataSource-->
+    <!--<jee:jndi-lookup id="dataSource" jndi-name="java:/WeatherDS"-->
+                     <!--expected-type="javax.sql.DataSource" />-->
+
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:/WeatherDS" />
+        <property name="resourceRef" value="true" />
+    </bean>
+
+    <!-- REST template configuration -->
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
+
+    <!-- Json factory configuration -->
+    <bean id="jsonFactory" class="com.fasterxml.jackson.core.JsonFactory"/>
+
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean id="jacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="prettyPrint" value="true" />
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--Do not forget activate @Transactional JPA annotation with <annotation-driven/>-->
+    <!-- JPA Persistence Context and EntityManager configuration -->
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" >
+        <!--packagesToScan - search Entity and mapping them -->
+        <property name="packagesToScan" value="ru.bellintegrator.wb" />
+        <property name="dataSource" ref="dataSource" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" >
+                <property name="generateDdl" value="true" />
+                <property name="showSql" value="true" />
+            </bean>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+            </props>
+        </property>
+    </bean>
+
+     <!--Automatic Transaction Participation-->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+</beans>

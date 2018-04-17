@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+	   http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	   http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context.xsd
+	   http://www.springframework.org/schema/jdbc
+       http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+       http://www.springframework.org/schema/jee
+       http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
+
+    <context:component-scan base-package="ru.bellintegrator.wb" />
+
+    <mvc:annotation-driven/>
+
+    <context:property-placeholder location="classpath:util.properties" />
+
+    <bean id="destinationManager" class="com.mockrunner.jms.DestinationManager"/>
+
+    <bean id="myBrokerSendDestination" factory-bean="destinationManager" factory-method="createQueue">
+        <constructor-arg index="0" value="demoMockRunnerQueue" />
+    </bean>
+
+    <bean id="configurationManager" class="com.mockrunner.jms.ConfigurationManager"/>
+
+    <bean id="jmsConnectionFactory" class="com.mockrunner.mock.jms.MockQueueConnectionFactory">
+        <constructor-arg index="0" ref="destinationManager" />
+        <constructor-arg index="1" ref="configurationManager" />
+    </bean>
+
+    <bean id="myJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="jmsConnectionFactory" />
+        <property name="defaultDestination" ref="myBrokerSendDestination" />
+        <property name="sessionTransacted" value="true" />
+        <property name="sessionAcknowledgeMode" value="#{T(javax.jms.Session).CLIENT_ACKNOWLEDGE}" />
+        <property name="pubSubDomain" value="true" />
+        <property name="receiveTimeout"	value="#{T(org.springframework.jms.core.JmsTemplate).RECEIVE_TIMEOUT_NO_WAIT}" />
+    </bean>
+
+    <bean id="listnerJms" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <property name="connectionFactory" ref="jmsConnectionFactory" />
+    <property name="destination" ref="myBrokerSendDestination" />
+    <property name="messageListener" ref="messageListenerAdapter" />
+    <!--<property name="sessionTransacted" value="true" />-->
+    </bean>
+
+    <bean id="messageListenerAdapter" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+    <constructor-arg ref="weatherListner" />
+    <!--<property name="defaultListenerMethod" value="receiveMessage" />-->
+    </bean>
+
+    <!--<bean id="jmsMessageListener" class="ru.bellintegrator.wb.controller.WeatherController" />-->
+
+    <!-- initialize connection for test-->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/stady" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+    </bean>
+
+    <!-- REST template configuration -->
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
+
+    <!-- Json factory configuration -->
+    <bean id="jsonFactory" class="com.fasterxml.jackson.core.JsonFactory"/>
+
+    <bean id="mapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean id="jacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="prettyPrint" value="true" />
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--Do not forget activate @Transactional JPA annotation with <annotation-driven/>-->
+    <!-- JPA Persistence Context and EntityManager configuration -->
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" >
+        <!--packagesToScan - search Entity and mapping them -->
+        <property name="packagesToScan" value="ru.bellintegrator.wb" />
+        <property name="dataSource" ref="dataSource" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" >
+                <property name="generateDdl" value="true" />
+                <property name="showSql" value="true" />
+            </bean>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- Automatic Transaction Participation-->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+</beans>
