@@ -67,17 +67,6 @@ public class WeatherController {
         return weatherView;
     }
 
-//    /**
-//     * @param weather
-//     * listens to the message queue
-//     */
-//    @JmsListener(destination = "TestQ", containerFactory = "jmsConnectionFactory")
-//    public void receiveMessage(Weather weather)  throws IOException, DataAccessError {
-//        System.out.println("weather: " + weather);
-//        System.out.println("service: "+weatherService);
-////        weatherService.saveWeather(weather);
-//    }
-
     /**
      * @param exception
      * @return ResponseEntity<String>

@@ -84,7 +84,7 @@ public class WeatherControllerUnitTest {
                 post("/weather/yahoo")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(asJsonString(weather)))
-                .andExpect(status().isCreated());
+                .andExpect(status().isOk());
 
         verify(weatherService, times(1)).getWeatherYahoo(weather.getCity());
         verifyNoMoreInteractions(weatherService);

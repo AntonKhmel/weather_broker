@@ -17,7 +17,29 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf>
+      <file leaf-file-name="WeatherControllerUnitTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/ru/bellintegrator/wb/unit/WeatherControllerUnitTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="86" column="42" selection-start-line="86" selection-start-column="42" selection-end-line="86" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WeatherController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/bellintegrator/wb/controller/WeatherController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="612">
+              <caret line="67" column="5" selection-start-line="67" selection-start-column="5" selection-end-line="67" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -49,11 +71,9 @@
         <option value="$PROJECT_DIR$/src/main/java/ru/bellintegrator/wb/service/json/impl/ConvertImpl.java" />
         <option value="$PROJECT_DIR$/web/resources/javascript/query.js" />
         <option value="$PROJECT_DIR$/src/main/java/ru/bellintegrator/wb/exception/SomeHandler.java" />
-        <option value="$PROJECT_DIR$/src/test/java/ru/bellintegrator/wb/unit/WeatherControllerUnitTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/bellintegrator/wb/model/Weather.java" />
         <option value="$PROJECT_DIR$/src/test/java/ru/bellintegrator/wb/testconfig/testApplicationContext.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/bellintegrator/wb/controller/WeatherController.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/bellintegrator/wb/service/impl/WeatherServiceImpl.java" />
         <option value="$PROJECT_DIR$/web/WEB-INF/testconfig/testApplicationContext.xml" />
         <option value="$PROJECT_DIR$/src/main/java/ru/bellintegrator/wb/service/WeatherService.java" />
@@ -62,6 +82,8 @@
         <option value="$PROJECT_DIR$/src/main/java/ru/bellintegrator/wb/dao/impl/WeatherDAOImpl.java" />
         <option value="$PROJECT_DIR$/web/WEB-INF/config/applicationContext.xml" />
         <option value="$PROJECT_DIR$/src/test/java/ru/bellintegrator/wb/integration/WeatherControllerIntegrationTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/ru/bellintegrator/wb/unit/WeatherControllerUnitTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/bellintegrator/wb/controller/WeatherController.java" />
       </list>
     </option>
   </component>
@@ -104,7 +126,7 @@
     </navigator>
     <panes>
       <pane id="AndroidView" />
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -275,7 +297,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -318,7 +340,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.Test">
+  <component name="RunManager" selected="JBoss Server.WildFly">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
     </configuration>
@@ -533,16 +555,11 @@
       <workItem from="1523868929256" duration="1522000" />
       <workItem from="1523873910775" duration="16230000" />
       <workItem from="1523941597215" duration="27213000" />
+      <workItem from="1524028196354" duration="248000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Test - 2018.04.17 at 16h 02m 59s.xml">
-      <configuration name="Test" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Test - 2018.04.17 at 16h 05m 48s.xml">
-      <configuration name="Test" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="Test - 2018.04.17 at 16h 08m 22s.xml">
       <configuration name="Test" configurationId="JUnit" />
     </history-entry>
@@ -567,9 +584,15 @@
     <history-entry file="Test - 2018.04.17 at 17h 18m 32s.xml">
       <configuration name="Test" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="Test - 2018.04.18 at 09h 12m 34s.xml">
+      <configuration name="Test" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Test - 2018.04.18 at 09h 13m 19s.xml">
+      <configuration name="Test" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="198839000" />
+    <option name="totallyTimeSpent" value="199087000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -596,7 +619,7 @@
       <window_info anchor="bottom" id="Run" order="2" weight="0.45406547" />
       <window_info anchor="bottom" id="Spring" order="11" weight="0.32952693" />
       <window_info anchor="bottom" id="Terminal" order="12" weight="0.32626426" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21354167" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21354167" />
       <window_info anchor="right" id="Bean Validation" order="4" />
       <window_info id="Web" order="2" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="3" />
@@ -612,10 +635,9 @@
       <window_info anchor="bottom" id="Application Servers" order="13" weight="0.32949308" />
       <window_info id="Designer" order="2" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.45406547" />
       <window_info anchor="bottom" id="Spring" order="11" weight="0.32952693" />
       <window_info id="Image Layers" order="3" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.45406547" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="4" />
@@ -623,6 +645,7 @@
       <window_info anchor="bottom" id="Terminal" order="12" weight="0.32626426" />
       <window_info id="Capture Tool" order="6" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32946146" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -631,7 +654,6 @@
       <window_info anchor="bottom" id="Database Changes" order="14" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
       <window_info anchor="right" id="Maven Projects" order="5" weight="0.32902735" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21354167" />
       <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -640,8 +662,9 @@
       <window_info anchor="right" id="Theme Preview" order="8" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" id="Bean Validation" order="9" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -899,13 +922,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/ru/bellintegrator/wb/unit/WeatherControllerUnitTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="96" column="8" selection-start-line="96" selection-start-column="8" selection-end-line="96" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/bellintegrator/wb/model/Weather.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1457">
@@ -928,16 +944,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1547">
           <caret line="236" column="21" selection-start-line="236" selection-start-column="21" selection-end-line="236" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/bellintegrator/wb/controller/WeatherController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="29" column="14" selection-start-line="29" selection-start-column="14" selection-end-line="29" selection-end-column="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1007,6 +1013,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/ru/bellintegrator/wb/unit/WeatherControllerUnitTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="86" column="42" selection-start-line="86" selection-start-column="42" selection-end-line="86" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/bellintegrator/wb/controller/WeatherController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="67" column="5" selection-start-line="67" selection-start-column="5" selection-end-line="67" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
